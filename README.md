@@ -27,9 +27,9 @@ Install django rest framework:
 ```bash
 pip install django djangorestframework
 ```
-Install django-cors-heders:
+Install django-cors-headers:
 ```bash
-pip install django-cors-heders
+pip install django-cors-headers
 ```
 
 ## 2: Getting Started
