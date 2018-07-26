@@ -24,6 +24,7 @@ export default {
 
 body {
   font-family: "Work Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 140%;
   background: #ffffff;
 }
 

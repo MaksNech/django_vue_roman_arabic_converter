@@ -1,12 +1,12 @@
 <template>
     <div>
-        <p class="error" v-if="err">Invalid Data send on server</p>
+      <p class="error" v-if="err">Invalid input format error. Verify that the input is correct.</p>
         <div class="row">
             <div class="col">
                 <numeric-text-area @convertInt="convertInt" :value="firstInput" :id="1" ></numeric-text-area>
             </div>
             <div class="col">
-                <numeric-text-area @convertInt="convertInt" :value="secondInput" :id="2"></numeric-text-area>
+                <numeric-text-area @convertInt="convertInt" :value="secondInput" :id="2" :readOnly="true" ></numeric-text-area>
             </div>
         </div>
     </div>
@@ -31,7 +31,15 @@ export default {
   },
   methods: {
     convertInt: _.debounce(function(e) {
-      this.sendData(e);
+      if (e.num_value == "") {
+        if (e.id == 1) {
+          this.secondInput = e.num_value;
+        } else {
+          this.firstInput = e.num_value;
+        }
+      } else {
+        this.sendData(e);
+      }
     }, 500),
     sendData: function(data) {
       $.ajax({
@@ -57,3 +65,5 @@ export default {
   }
 };
 </script>
+<style>
+</style>

@@ -1,14 +1,21 @@
 <template>
       <form action="#">
-        <label id="labelTextArea" v-bind:class="{ error: inputError }">{{label}}</label>
-        <textarea v-model="num_val" v-on:keyup="onValueChange" class="form-control" ref="TextArea" rows="10"></textarea>
+        <label class="rt" id="labelTextArea" v-bind:class="{ error: inputError }">{{label}}</label>
+        <textarea 
+        class="form-control" 
+        ref="TextArea" 
+        rows="10"
+        :readonly="readOnly"
+        v-model="num_val" 
+        v-on:keyup="onValueChange" 
+        ></textarea>
       </form>
 </template>
 
 <script>
 export default {
   name: "NumericTextArea",
-  props: ["value", "id"],
+  props: ["value", "id", "readOnly"],
   data() {
     return {
       num_val: "",
@@ -39,7 +46,7 @@ export default {
       this.inputError = false;
       if (value == "") {
         this.label = "Type here numeral";
-        return false;
+        return true;
       } else if (
         Boolean(value.match(/[^IVXLCDM]/gi)) &&
         Boolean(value.match(/[^0-9]/gi))
