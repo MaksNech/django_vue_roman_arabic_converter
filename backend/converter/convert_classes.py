@@ -1,7 +1,7 @@
 
 class RomanToArabic(str):
-    def __init__(self, roman):
-        roman = self.check_valid(roman)
+    def __init__(self, numeral):
+        roman = self.check_valid(numeral)
         keys = ['IV', 'IX', 'XL', 'XC', 'CD', 'CM',
                 'I', 'V', 'X', 'L', 'C', 'D', 'M']
         to_arabic = {'IV': '4', 'IX': '9', 'XL': '40', 'XC': '90', 'CD': '400', 'CM': '900',
@@ -11,27 +11,29 @@ class RomanToArabic(str):
                 roman = roman.replace(key, ' {}'.format(to_arabic.get(key)))
         self.arabic = sum(int(num) for num in roman.split())
 
-    def check_valid(self, roman):
-        roman = roman.upper()
+    def check_valid(self, numeral):
+        roman = numeral.upper()
         invalid = ['IIII', 'VV', 'IIV', 'XXXX',
                    'IIX', 'VX', 'LL', 'IL', 'VL',
                    'CCCC', 'IC', 'VC', 'DD', 'ID',
                    'VD', 'XD', 'LD', 'MMMM', 'IM',
                    'VM', 'XM', 'LM', 'DM']
         if any(sub in roman for sub in invalid):
+            # to force a specified exception to occur.
             raise ValueError('Invalid roman numeral: {}'.format(roman))
         return roman
 
 
 class ArabicToRoman(int):
+    # Creating instance. We customize the instance created and make some validation operations over
+    # it before initializer __init__  being called.
     def __new__(cls, numeral):
-        if numeral > 3999:
+        if numeral > 3999 or numeral <= 0:
             raise ValueError(
-                'Values over 3999 are not allowed: {}'.format(numeral))
-        if numeral <= 0:
-            raise ValueError(
-                'Zero and negative values are not allowed: {}'.format(numeral))
+                'Zero, negative values and values over 3999 are not allowed: {}'.format(numeral))
+        # create new instance of the class by invoking the superclass’s __new__ method using super
         return super().__new__(cls, numeral)
+    # __init__ will be called to initialize instance when we are creating instance.
 
     def __init__(self, numeral):
         to_roman = {1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V',
@@ -41,6 +43,8 @@ class ArabicToRoman(int):
                     600: 'DC', 700: 'DCC', 800: 'DCCC', 900: 'CM', 1000: 'M',
                     2000: 'MM', 3000: 'MMM'}
         self.roman = ''.join([to_roman.get(num) for num in self][::-1])
+
+    # the __iter__() method is called automatically whenever we calls "for" loop in __init__.
 
     def __iter__(self):
         numeral = self.__str__()
