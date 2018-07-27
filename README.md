@@ -31,10 +31,7 @@ Install django-cors-headers:
 ```bash
 pip install django-cors-headers
 ```
-Install py-romanify:
-```bash
-pip install py-romanify
-```
+
 
 ## 2: Getting Started
 
