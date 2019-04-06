@@ -1,4 +1,4 @@
-# vue-django-roman_arabic_converter
+# Roman-arabic converter with Django and Vue js.
 
 ## 1: Initial Setup
 
